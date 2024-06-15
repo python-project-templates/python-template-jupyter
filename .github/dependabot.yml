@@ -3,12 +3,22 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
+    labels:
+      - "part: github_actions"
+
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
       interval: "monthly"
-  - package-ecosystem: "yarn"
+    labels:
+      - "lang: python"
+      - "part: dependencies"
+
+  - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "monthly"
+    labels:
+      - "lang: javascript"
+      - "part: dependencies"
