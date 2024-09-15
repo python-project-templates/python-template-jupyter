@@ -1,150 +1,154 @@
 [build-system]
 requires = [
-    "hatchling>=1.3.1",
+    "hatchling"
+    "hatch-jupyter-builder",
     "jupyterlab>=4,<5",
 ]
-build-backend = "hatchling.build"
+build-backend="hatchling.build"
 
 [project]
-name = "jupyter_template"
-authors = [{name = "Tim Paine", email = "t.paine154@gmail.com"}]
-description="A Python/JS project template for Jupyter extensions"
+name = "jupyter-template"
+authors = [{name = "Python Project Template Authors", email = "3105306+timkpaine@users.noreply.github.com"}]
+description="A Jupyter-Python project template"
 readme = "README.md"
 license = { text = "Apache-2.0" }
 version = "0.1.0"
-requires-python = ">=3.7"
-keywords = [
-     "Jupyter",
-     "JupyterLab",
-     "Widgets",
-     "IPython",
- ]
+requires-python = ">=3.9"
+keywords = []
 
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11","Framework :: Jupyter",
-    "Framework :: Jupyter :: JupyterLab",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
 
-dependencies = [
-    "numpy",
-    "jupyterlab>=4",
-    "ipywidgets>=7.5.1",
-]
+dependencies = []
 
 [project.urls]
-Repository = "https://github.com/python-project-templates/jupyter"
-Homepage = "https://github.com/python-project-templates/jupyter"
+Repository = "https://github.com/python-project-templates/jupyter-template"
+Homepage = "https://github.com/python-project-templates/jupyter-template"
 
 [project.optional-dependencies]
 develop = [
-    "black>=23",
-    "bump2version",
+    "build",
+    "bump-my-version",
     "check-manifest",
-    "mypy",
+    "hatch-jupyter-builder",
+    "hatchling",
+    "jupyter>=4,<5",
     "pytest",
     "pytest-cov",
     "ruff",
-    "semgrep",
-    "Sphinx",
-    "sphinx-markdown-builder",
     "twine",
     "wheel",
 ]
-test = [
-    "pytest",
-    "pytest-cov",
-]
 
-[tool.black]
-color = true
-line-length = 120
-target-version = ['py310']
-skip-string-normalization = true
+[project.scripts]
+
+[tool.bumpversion]
+current_version = "0.1.0"
+commit = true
+tag = true
+
+[[tool.bumpversion.files]]
+filename = "jupyter_template/__init__.py"
+search = '__version__ = "{current_version}"'
+replace = '__version__ = "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "js/package.json"
+search = '"version": "{current_version}"'
+replace = '"version": "{new_version}"'
 
 [tool.check-manifest]
 ignore = [
-	"jupyter_template/labextension/**",
-	"jupyter_template/nbextension/**",
-	"js/**",
+    ".copier-answers.yml",
+    "Makefile",
+    "setup.py",
 ]
-
 
 [tool.hatch.build]
 artifacts = [
-    "jupyter_template/nbextension/static/index.*",
-    "jupyter_template/labextension"
+    "jupyter_template/extension",
+]
+
+[tool.hatch.build.sources]
+src = "/"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/jupyter_template",
+    "/js",
+    "LICENSE",
+    "README.md",
+]
+exclude = [
+    ".copier-answers.yml",
+    "/.github",
+    "/.gitattributes",
+    "/.gitignore",
+    "/js/node_modules",
+]
+
+[tool.hatch.build.targets.wheel]
+include = [
+    "/jupyter_template",
+]
+exclude = [
+    ".copier-answers.yml",
+    "/.github",
+    "/.gitattributes",
+    "/.gitignore",
+    "/js/node_modules",
+    "/pyproject.toml",
 ]
 
 [tool.hatch.build.targets.wheel.shared-data]
-"jupyter_template/nbextension" = "share/jupyter/nbextensions/jupyter_template"
-"jupyter_template/labextension" = "share/jupyter/labextensions/jupyter_template"
-"jupyter_template/extension/install.json" = "share/jupyter/labextensions/jupyter_template/install.json"
-"jupyter_template/extension/jupyter_template.json" = "etc/jupyter/nbconfig/notebook.d/jupyter_template.json"
-
-[tool.hatch.build.targets.sdist]
-exclude = [
-    ".github",
-    "binder",
-    "docs",
-]
+"jupyter_template/extension" = "share/jupyter/labextensions/jupyter_template"
 
 [tool.hatch.build.hooks.jupyter-builder]
 build-function = "hatch_jupyter_builder.npm_builder"
 ensured-targets = [
-    "jupyter_template/nbextension/static/index.js",
-    "jupyter_template/labextension/package.json",
+    "jupyter_template/extension/index.js",
 ]
 skip-if-exists = [
-    "jupyter_template/nbextension/static/index.js",
-    "jupyter_template/labextension/package.json",
+    "jupyter_template/extension/index.js",
 ]
 dependencies = [
-    "hatch-jupyter-builder>=0.5.0",
+    "hatch-jupyter-builder",
 ]
 
 [tool.hatch.build.hooks.jupyter-builder.build-kwargs]
 path = "js"
 build_cmd = "build"
-npm = ["yarn"]
-
-[tool.ruff]
-line-length = 120
-
-[tool.ruff.per-file-ignores]
-"__init__.py" = ["F401"]
-
-[tool.isort]
-line_length = 120
-known_first_party = 'pydantic'
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-combine_as_imports = true
-
-[tool.mypy]
-python_version = '3.10'
-# show_error_codes = true
-# follow_imports = 'silent'
-# strict_optional = true
-# warn_redundant_casts = true
-# warn_unused_ignores = true
-# disallow_any_generics = true
-# check_untyped_defs = true
-# no_implicit_reexport = true
-# warn_unused_configs = true
-# disallow_subclassing_any = true
-# disallow_incomplete_defs = true
-# disallow_untyped_decorators = true
-# disallow_untyped_calls = true
+npm = "pnpm"
 
 [tool.pytest.ini_options]
-asyncio_mode = 'strict'
-testpaths = 'jupyter_template/tests'
+asyncio_mode = "strict"
+testpaths = "jupyter_template/tests"
+
+[tool.ruff]
+line-length = 150
+
+[tool.ruff.lint]
+extend-select = ["I"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+default-section = "third-party"
+known-first-party = ["jupyter_template"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]

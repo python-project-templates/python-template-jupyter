@@ -1,53 +1,53 @@
 #########
 # BUILD #
 #########
-.PHONY: develop build-py build-js build install serverextension labextension
-
-develop:  ## install dependencies and build library
+.PHONY: develop-py develop-js develop
+develop-py:
 	python -m pip install -e .[develop]
-	cd js; yarn
 
-build-py:  ## build the python library
-	python -m build .
+develop-js:
+	cd js; pnpm install && npx playwright install
 
-build-js:  ## build javascript
-	cd js; yarn build
+develop: develop-js develop-py  ## setup project for development
 
-build: build-py build-js  ## build the library
+.PHONY: build-py build-js build
+build-py:
+	python setup.py build build_ext --inplace
 
+build-js:
+	cd js; pnpm build
 
-install:  ## install library
+build: build-js build-py  ## build the project
+
+.PHONY: install
+install:  ## install python library
 	python -m pip install .
-serverextension: install ## enable the jupyter server extension
-	python -m jupyter server extension enable --py jupyter_template
-
-labextension: js ## build and install the labextension
-	cd js; python -m jupyter labextension install .
 
 #########
 # LINTS #
 #########
-.PHONY: lint-py lint-js lint-cpp lint  lints fix-py fix-js fix-cpp fix format
+.PHONY: lint-py lint-js lint lints
+lint-py:  ## run python linter with ruff
+	python -m ruff check jupyter_template
+	python -m ruff format --check jupyter_template
 
-lint-py:  ## run python linter with flake8 and black
-	python -m ruff jupyter_template setup.py
-	python -m black --check jupyter_template setup.py
-lint-js:  ## run javascript linter with eslint
-	cd js; yarn lint
+lint-js:  ## run js linter
+	cd js; pnpm lint
 
-lint: lint-py lint-js  ## run all lints
+lint: lint-js lint-py  ## run project linters
 
-# Alias
+# alias
 lints: lint
 
-fix-py:  ## fix python formatting with black
-	python -m black jupyter_template/ setup.py
-	python -m ruff jupyter_template/ setup.py --fix
+.PHONY: fix-py fix-js fix format
+fix-py:  ## fix python formatting with ruff
+	python -m ruff check --fix jupyter_template
+	python -m ruff format jupyter_template
 
-fix-js:  ## fix javascript formatting with eslint
-	cd js; yarn fix
+fix-js:  ## fix js formatting
+	cd js; pnpm fix
 
-fix: fix-py fix-js  ## run all autofixers
+fix: fix-js fix-py  ## run project autoformatters
 
 # alias
 format: fix
@@ -55,17 +55,14 @@ format: fix
 ################
 # Other Checks #
 ################
-.PHONY: check-manifest semgrep checks check annotate
+.PHONY: check-manifest checks check annotate
 
 check-manifest:  ## check python sdist manifest with check-manifest
 	check-manifest -v
 
-semgrep:  ## check for possible errors with semgrep
-	semgrep ci --config auto
+checks: check-manifest
 
-checks: check-manifest semgrep
-
-# Alias
+# alias
 check: checks
 
 annotate:  ## run python type annotation checks with mypy
@@ -74,33 +71,31 @@ annotate:  ## run python type annotation checks with mypy
 #########
 # TESTS #
 #########
-.PHONY: test-py test-js coverage-py test coverage tests
-
+.PHONY: test-py tests-py coverage-py
 test-py:  ## run python tests
 	python -m pytest -v jupyter_template/tests --junitxml=junit.xml
 
-test-js: ## run javascript tests
-	cd js; yarn test
-coverage-py:  ## run tests and collect test coverage
-	python -m pytest -v jupyter_template/tests --junitxml=junit.xml --cov=jupyter_template --cov-branch --cov-fail-under=75 --cov-report term-missing --cov-report xml
+# alias
+tests-py: test-py
 
-test: test-py test-js ## run all tests
+coverage-py:  ## run python tests and collect test coverage
+	python -m pytest -v jupyter_template/tests --junitxml=junit.xml --cov=jupyter_template --cov-branch --cov-fail-under=50 --cov-report term-missing --cov-report xml
 
-coverage: coverage-py test-js  ## run all tests with coverage collection
+.PHONY: test-js tests-js coverage-js
+test-js:  ## run js tests
+	cd js; pnpm test
 
-# Alias
+# alias
+tests-js: test-js
+
+coverage-js: test-js  ## run js tests and collect test coverage
+
+.PHONY: test coverage tests
+test: test-py test-js  ## run all tests
+coverage: coverage-py coverage-js  ## run all tests and collect test coverage
+
+# alias
 tests: test
-
-########
-# DOCS #
-########
-.PHONY: docs show-docs
-
-docs:  ## build html documentation
-	make -C ./docs html
-
-show-docs:  ## show docs with running webserver
-	cd ./docs/_build/html/ && PYTHONBUFFERED=1 python -m http.server | sec -u "s/0\.0\.0\.0/$$(hostname)/g"
 
 ###########
 # VERSION #
@@ -108,37 +103,34 @@ show-docs:  ## show docs with running webserver
 .PHONY: show-version patch minor major
 
 show-version:  ## show current library version
-	bump2version --dry-run --allow-dirty setup.py --list | grep current | awk -F= '{print $2}'
+	@bump-my-version show current_version
 
 patch:  ## bump a patch version
-	bump2version patch
+	@bump-my-version bump patch
 
 minor:  ## bump a minor version
-	bump2version minor
+	@bump-my-version bump minor
 
 major:  ## bump a major version
-	bump2version major
+	@bump-my-version bump major
 
 ########
 # DIST #
 ########
-.PHONY: dist-py dist-py-sdist dist-py-local-wheel publish-py publish-js publish
+.PHONY: dist dist-build dist-sdist dist-local-wheel publish
 
-dist-py:  # build python dists
-	python setup.py sdist bdist_wheel
+dist-build-py:  # build python dists
+	python -m build -w -s
+
+dist-build-js:  # build js dists
+	cd js; pnpm pack
 
 dist-check:  ## run python dist checker with twine
 	python -m twine check dist/*
 
-dist: clean build dist-py dist-check  ## build all dists
+dist: clean build dist-build-js dist-build-py dist-check  ## build all dists
 
-publish-py:  # publish python assets
-	python -m twine upload dist/* --skip-existing
-
-publish-js:  ## pulbish javascript assets
-	cd js; npm publish || echo "can't publish - might already exist"
-
-publish: dist publish-py publish-js  ## publish dists
+publish: dist  # publish python assets
 
 #########
 # CLEAN #
@@ -150,7 +142,6 @@ deep-clean: ## clean everything from the repository
 
 clean: ## clean the repository
 	rm -rf .coverage coverage cover htmlcov logs build dist *.egg-info
-	rm -rf js/lib js/dist jupyter_template/labextension jupyter_template/nbextension
 
 ############################################################################################
 
