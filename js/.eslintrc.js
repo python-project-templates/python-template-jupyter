@@ -1,4 +1,3 @@
-
 module.exports = {
   parser: "@babel/eslint-parser",
   extends: ["airbnb-base", "prettier", "plugin:json/recommended"],
@@ -43,7 +42,6 @@ module.exports = {
     "no-const-assign": "error",
     "no-nested-ternary": "warn",
     "no-this-before-super": "error",
-    "no-plusplus": "off",
     "no-undef": "error",
     "no-underscore-dangle": "off",
     "no-unreachable": "error",
@@ -53,6 +51,7 @@ module.exports = {
     "spaced-comment": "off",
     "valid-typeof": "error",
 
+    "import/extensions": "off",
     "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
     "import/no-extraneous-dependencies": "off",

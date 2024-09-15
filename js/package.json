@@ -1,52 +1,22 @@
 {
-  "name": "jupyter_template",
-  "private": true,
+  "name": "jupyter-template",
   "version": "0.1.0",
-  "description": "An example instance of [python-project-templates/jupyter](https://github.com/python-project-templates/jupyter), for testing",
+  "description": "A Jupyter-Python project template",
+  "repository": "git@github.com:python-project-templates/jupyter-template.git",
+  "author": "Python Project Template Authors <3105306+timkpaine@users.noreply.github.com>",
+  "license": "Apache-2.0",
   "keywords": [
     "jupyter",
     "jupyterlab",
-    "jupyterlab-extension",
-    "widgets"
+    "jupyterlab-extension"
   ],
-  "files": [
-    "lib/**/*.js",
-    "dist/*.js",
-    "css/*.css"
-  ],
-  "homepage": "https://github.com/python-project-templates/jupyter",
-  "bugs": {
-    "url": "https://github.com/python-project-templates/jupyter/issues"
-  },
-  "license": "Apache-2.0",
-  "author": {
-    "name": "Tim Paine",
-    "email": "t.paine154@gmail.com"
-  },
   "main": "lib/index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/python-project-templates/jupyter"
-  },
-  "scripts": {
-    "build:babel": "babel src/ --source-maps --out-dir lib/",
-    "build:labextension": "jupyter labextension build .",
-    "build:nbextension": "webpack --mode=production",
-    "build": "npm-run-all clean build:*",
-    "clean": "npm-run-all clean:*",
-    "clean:lib": "rimraf lib",
-    "clean:labextension": "rimraf ../jupyter_template/labextension",
-    "clean:nbextension": "rimraf ../jupyter_template/nbextension/static/index.js ../jupyter_template/nbextension/static/index.js.map",
-    "fix": "yarn lint --fix",
-    "lint": "eslint -c .eslintrc.js --ext .js src/ tests/",
-    "prepack": "npm run build",
-    "test": "jest --coverage --collectCoverageFrom=src/*.{js}",
-    "watch": "npm-run-all -p watch:*",
-    "watch:lib": "yarn build:lib --watch",
-    "watch:nbextension": "webpack --watch"
-  },
+  "files": [
+    "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
+    "style/**/*.css"
+  ],
   "jupyterlab": {
-    "extension": "lib/plugin.js",
+    "extension": "lib/index.js",
     "outputDir": "../jupyter_template/labextension",
     "discovery": {
       "server": {
@@ -59,45 +29,47 @@
       }
     }
   },
+  "scripts": {
+    "build:babel": "babel src/ --source-maps --out-dir lib/",
+    "build:nbextension": "mkdirp ../jupyter_template/nbextension/static/ && cpy --flat 'src/notebook.js' '../jupyter_template/nbextension/static/'",
+    "build:labextension": "rimraf ../jupyter_template/labextension && jupyter labextension build .",
+    "build": "yarn clean && yarn build:babel && yarn build:labextension && yarn build:nbextension",
+    "clean": "rimraf lib",
+    "fix": "yarn lint --fix",
+    "lint": "eslint -c .eslintrc.js --ext .js src/ tests/",
+    "prepublishOnly": "yarn run build",
+    "test": "jest --coverage --collectCoverageFrom=src/*.{js}"
+  },
   "dependencies": {
-    "@jupyter-widgets/base": "^6.0.4"
+    "@jupyterlab/application": "^4.1.5",
+    "@jupyterlab/apputils": "^4.2.5",
+    "@jupyterlab/notebook": "^4.1.5",
+    "@jupyterlab/services": "^7.1.5",
+    "@lumino/disposable": "^2.1.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.22.5",
-    "@babel/core": "^7.22.5",
-    "@babel/eslint-parser": "^7.22.5",
-    "@babel/preset-env": "^7.22.5",
-    "@jupyterlab/builder": "^4.0.2",
-    "@lumino/application": "^2.1.1",
-    "@lumino/widgets": "^2.1.1",
-    "babel-jest": "^29.5.0",
-    "css-loader": "^6.8.1",
-    "eslint": "^8.43.0",
-    "eslint-config-airbnb": "^19.0.2",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.3",
+    "@babel/eslint-parser": "^7.24.1",
+    "@babel/preset-env": "^7.24.3",
+    "@jupyterlab/builder": "^4.1.5",
+    "babel-jest": "^29.7.0",
+    "cpy-cli": "^5.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-jest": "^27.2.2",
-    "eslint-plugin-jsdoc": "^46.2.6",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jest": "^28.5.0",
     "eslint-plugin-json": "^3.1.0",
-    "eslint-plugin-prefer-arrow": "^1.2.3",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-unicorn": "^47.0.0",
-    "expect.js": "^0.3.1",
-    "fs-extra": "^11.1.1",
+    "eslint-plugin-prettier": "^5.1.3",
     "isomorphic-fetch": "^3.0.0",
-    "jest": "^29.5.0",
-    "jest-environment-jsdom": "^29.5.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "jest-junit": "^16.0.0",
     "jest-transform-css": "^6.0.1",
     "mkdirp": "^3.0.1",
-    "mocha": "^10.2.0",
-    "npm-run-all": "^4.1.3",
-    "prettier": "^2.8.8",
-    "rimraf": "^5.0.1",
-    "source-map-loader": "^4.0.0",
-    "style-loader": "^3.3.3",
-    "webpack": "^5.88.0",
-    "webpack-cli": "^5.1.4"
+    "prettier": "^3.2.5",
+    "rimraf": "^6.0.1"
   }
 }

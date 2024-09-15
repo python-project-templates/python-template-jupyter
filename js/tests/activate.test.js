@@ -1,7 +1,9 @@
-import examplePlugin from "../src/plugin";
+import "isomorphic-fetch";
+
+import {_activate} from "../src/index";
 
 describe("Checks activate", () => {
   test("Check activate", () => {
-    expect(examplePlugin);
+    expect(_activate);
   });
 });

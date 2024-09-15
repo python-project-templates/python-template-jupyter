@@ -1,5 +1,19 @@
-
-const esModules = ["@jupyter", "@jupyterlab", "@jupyter-widgets", "lib0", "y-protocols", "dagre-d3-es", "d3", "internmap", "delaunator", "robust-predicates", "lodash-es"].join("|");
+const esModules = [
+  "@finos",
+  "@jupyter",
+  "@jupyterlab",
+  "@jupyter-widgets",
+  "@microsoft",
+  "@rjsf",
+  "delaunator",
+  "exenv-es6",
+  "internmap",
+  "lib0",
+  "lodash-es",
+  "nanoid",
+  "robust-predicates",
+  "y-protocols",
+].join("|");
 
 module.exports = {
   moduleDirectories: ["node_modules", "src", "tests"],
@@ -8,6 +22,7 @@ module.exports = {
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/fileMock.js",
   },
   reporters: [ "default", "jest-junit" ],
+  setupFiles: ["<rootDir>/tests/setup.js"],
   testEnvironment: "jsdom",
   transform: {
     "^.+\\.jsx?$": "babel-jest",

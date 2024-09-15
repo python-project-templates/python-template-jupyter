@@ -14,11 +14,3 @@ updates:
     labels:
       - "lang: python"
       - "part: dependencies"
-
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "monthly"
-    labels:
-      - "lang: javascript"
-      - "part: dependencies"
