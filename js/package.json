@@ -1,42 +1,75 @@
 {
-  "name": "nbprint",
-  "version": "0.1.10",
-  "description": "A framework for customizing NBConvert templates and building reports",
-  "repository": "git@github.com:nbprint/nbprint.git",
-  "author": "Tim Paine <t.paine154@gmail.com>",
+  "name": "jupyter-template",
+  "version": "0.1.0",
+  "description": "A Jupyter-Python project template",
+  "repository": "git@github.com:python-project-templates/jupyter-template.git",
+  "author": "Python Project Template Authors <3105306+timkpaine@users.noreply.github.com>",
   "license": "Apache-2.0",
-  "files": [
-    "dist/**/*",
-    "index.d.ts"
+  "keywords": [
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension"
   ],
-  "types": "index.d.ts",
-  "scripts": {
-    "build": "node build.mjs",
-    "clean": "rm -rf dist playwright-report ../nbprint/extension",
-    "lint": "prettier --check \"src/js/*.js\" \"src/less/*.less\" \"tests/*.spec.js\" \"*.js\" \"*.json\"",
-    "fix": "prettier --write  \"src/js/*.js\" \"src/less/*.less\" \"tests/*.spec.js\" \"*.js\" \"*.json\"",
-    "preinstall": "npx only-allow pnpm",
-    "prepack": "npm run build",
-    "start:tests": "http-server -p 3000 ",
-    "start:examples": "http-server -p 3000 -o examples/",
-    "test": "TZ=UTC playwright test"
+  "main": "lib/index.js",
+  "files": [
+    "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
+    "style/**/*.css"
+  ],
+  "jupyterlab": {
+    "extension": "lib/index.js",
+    "outputDir": "../jupyter_template/labextension",
+    "discovery": {
+      "server": {
+        "base": {
+          "name": "jupyter_template"
+        },
+        "managers": [
+          "pip"
+        ]
+      }
+    }
   },
-  "publishConfig": {
-    "access": "public"
+  "scripts": {
+    "build:babel": "babel src/ --source-maps --out-dir lib/",
+    "build:nbextension": "mkdirp ../jupyter_template/nbextension/static/ && cpy --flat 'src/notebook.js' '../jupyter_template/nbextension/static/'",
+    "build:labextension": "rimraf ../jupyter_template/labextension && jupyter labextension build .",
+    "build": "yarn clean && yarn build:babel && yarn build:labextension && yarn build:nbextension",
+    "clean": "rimraf lib",
+    "fix": "yarn lint --fix",
+    "lint": "eslint -c .eslintrc.js --ext .js src/ tests/",
+    "prepublishOnly": "yarn run build",
+    "test": "jest --coverage --collectCoverageFrom=src/*.{js}"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.5.1",
-    "pagedjs": "^0.4.3"
+    "@jupyterlab/application": "^4.1.5",
+    "@jupyterlab/apputils": "^4.2.5",
+    "@jupyterlab/notebook": "^4.1.5",
+    "@jupyterlab/services": "^7.1.5",
+    "@lumino/disposable": "^2.1.2"
   },
   "devDependencies": {
-    "@finos/perspective-esbuild-plugin": "^2.10.0",
-    "@finos/perspective-workspace": "^2.10.0",
-    "@playwright/test": "^1.42.1",
-    "@prospective.co/procss": "^0.1.15",
-    "cpy": "^11.0.1",
-    "esbuild": "^0.20.2",
-    "esbuild-plugin-less": "^1.3.3",
-    "http-server": "^14.1.1",
-    "prettier": "^3.2.5"
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.3",
+    "@babel/eslint-parser": "^7.24.1",
+    "@babel/preset-env": "^7.24.3",
+    "@jupyterlab/builder": "^4.1.5",
+    "babel-jest": "^29.7.0",
+    "cpy-cli": "^5.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jest": "^28.5.0",
+    "eslint-plugin-json": "^3.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "isomorphic-fetch": "^3.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-junit": "^16.0.0",
+    "jest-transform-css": "^6.0.1",
+    "mkdirp": "^3.0.1",
+    "prettier": "^3.2.5",
+    "rimraf": "^6.0.1"
   }
 }

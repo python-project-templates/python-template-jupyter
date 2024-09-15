@@ -32,6 +32,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         python-version: ["3.11"]
+        node-version: [20.x]
 
     steps:
     - uses: actions/checkout@v4
@@ -43,6 +44,16 @@ jobs:
         cache: 'pip'
         cache-dependency-path: 'pyproject.toml'
 
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'yarn'
+        cache-dependency-path: js/yarn.lock
+  
+    - name: Install yarn
+      run: npm install -g yarn
+  
     - name: Install dependencies
       run: make develop
 
@@ -64,8 +75,9 @@ jobs:
     - name: Upload test results (Python)
       uses: actions/upload-artifact@v4
       with:
-        name: pytest-results-${{ matrix.os }}-${{ matrix.python-version }}
-        path: junit.xml
+        name: test-results-${{ matrix.os }}-${{ matrix.python-version }}-${{ matrix.node-version }}
+        path: |
+          **/junit.xml
       if: ${{ always() }}
 
     - name: Publish Unit Test Results
