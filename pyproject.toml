@@ -81,6 +81,20 @@ ignore = [
     "jupyter_template/nbextension/**",
 ]
 
+[tool.coverage.run]
+branch = true
+omit = [
+    "jupyter_template/tests/integration/",
+]
+[tool.coverage.report]
+exclude_also = [
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "@(abc\\.)?abstractmethod",
+]
+ignore_errors = true
+fail_under = 50
+
 [tool.hatch.build]
 artifacts = [
     "jupyter_template/nbextension",
@@ -139,6 +153,7 @@ build_cmd = "build"
 npm = "pnpm"
 
 [tool.pytest.ini_options]
+addopts = ["-vvv", "--junitxml=junit.xml"]
 asyncio_mode = "strict"
 testpaths = "jupyter_template/tests"
 

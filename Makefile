@@ -73,13 +73,13 @@ annotate:  ## run python type annotation checks with mypy
 #########
 .PHONY: test-py tests-py coverage-py
 test-py:  ## run python tests
-	python -m pytest -v jupyter_template/tests --junitxml=junit.xml
+	python -m pytest -v jupyter_template/tests
 
 # alias
 tests-py: test-py
 
 coverage-py:  ## run python tests and collect test coverage
-	python -m pytest -v jupyter_template/tests --junitxml=junit.xml --cov=jupyter_template --cov-branch --cov-fail-under=50 --cov-report term-missing --cov-report xml
+	python -m pytest -v jupyter_template/tests --cov=jupyter_template --cov-report term-missing --cov-report xml
 
 .PHONY: test-js tests-js coverage-js
 test-js:  ## run js tests
@@ -117,18 +117,18 @@ major:  ## bump a major version
 ########
 # DIST #
 ########
-.PHONY: dist dist-build dist-sdist dist-local-wheel publish
+.PHONY: dist dist-py dist-js dist-check publish
 
-dist-build-py:  # build python dists
+dist-py:  # build python dists
 	python -m build -w -s
 
-dist-build-js:  # build js dists
+dist-js:  # build js dists
 	cd js; pnpm pack
 
 dist-check:  ## run python dist checker with twine
 	python -m twine check dist/*
 
-dist: clean build dist-build-js dist-build-py dist-check  ## build all dists
+dist: clean build dist-js dist-py dist-check  ## build all dists
 
 publish: dist  # publish python assets
 
