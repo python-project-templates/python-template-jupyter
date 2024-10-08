@@ -122,11 +122,7 @@ major:  ## bump a major version
 dist-py:  # build python dists
 	python -m build -w -s
 
-<<<<<<< before updating
-dist-build-js:  # build js dists
-=======
 dist-js:  # build js dists
->>>>>>> after updating
 	cd js; pnpm pack
 
 dist-check:  ## run python dist checker with twine
