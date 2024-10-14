@@ -1,8 +1,8 @@
 {
-  "name": "jupyter-template",
+  "name": "python-template-jupyter",
   "version": "0.1.0",
   "description": "A Jupyter-Python project template",
-  "repository": "git@github.com:python-project-templates/jupyter-template.git",
+  "repository": "git@github.com:python-project-templates/python-template-jupyter.git",
   "author": "Python Project Template Authors <3105306+timkpaine@users.noreply.github.com>",
   "license": "Apache-2.0",
   "keywords": [
@@ -17,11 +17,11 @@
   ],
   "jupyterlab": {
     "extension": "lib/index.js",
-    "outputDir": "../jupyter_template/labextension",
+    "outputDir": "../python_template_jupyter/labextension",
     "discovery": {
       "server": {
         "base": {
-          "name": "jupyter_template"
+          "name": "python_template_jupyter"
         },
         "managers": [
           "pip"
@@ -31,8 +31,8 @@
   },
   "scripts": {
     "build:babel": "babel src/ --source-maps --out-dir lib/",
-    "build:nbextension": "mkdirp ../jupyter_template/nbextension/static/ && cpy --flat 'src/notebook.js' '../jupyter_template/nbextension/static/'",
-    "build:labextension": "rimraf ../jupyter_template/labextension && jupyter labextension build .",
+    "build:nbextension": "mkdirp ../python_template_jupyter/nbextension/static/ && cpy --flat 'src/notebook.js' '../python_template_jupyter/nbextension/static/'",
+    "build:labextension": "rimraf ../python_template_jupyter/labextension && jupyter labextension build .",
     "build": "pnpm clean && pnpm build:babel && pnpm build:labextension && pnpm build:nbextension",
     "clean": "rimraf lib",
     "fix": "pnpm lint --fix",
