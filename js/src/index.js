@@ -2,13 +2,13 @@ import "../style/index.css";
 
 async function activate(app) {
   // eslint-disable-next-line no-console
-  console.log("JupyterLab extension jupyter-template is activated!");
+  console.log("JupyterLab extension python-template-jupyter is activated!");
 }
 
 const extension = {
   activate,
   autoStart: true,
-  id: "jupyter-template",
+  id: "python-template-jupyter",
   optional: [],
   requires: [],
 };

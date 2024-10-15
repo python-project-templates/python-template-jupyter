@@ -28,8 +28,8 @@ install:  ## install python library
 #########
 .PHONY: lint-py lint-js lint lints
 lint-py:  ## run python linter with ruff
-	python -m ruff check jupyter_template
-	python -m ruff format --check jupyter_template
+	python -m ruff check python_template_jupyter
+	python -m ruff format --check python_template_jupyter
 
 lint-js:  ## run js linter
 	cd js; pnpm lint
@@ -41,8 +41,8 @@ lints: lint
 
 .PHONY: fix-py fix-js fix format
 fix-py:  ## fix python formatting with ruff
-	python -m ruff check --fix jupyter_template
-	python -m ruff format jupyter_template
+	python -m ruff check --fix python_template_jupyter
+	python -m ruff format python_template_jupyter
 
 fix-js:  ## fix js formatting
 	cd js; pnpm fix
@@ -66,20 +66,20 @@ checks: check-manifest
 check: checks
 
 annotate:  ## run python type annotation checks with mypy
-	python -m mypy ./jupyter_template
+	python -m mypy ./python_template_jupyter
 
 #########
 # TESTS #
 #########
 .PHONY: test-py tests-py coverage-py
 test-py:  ## run python tests
-	python -m pytest -v jupyter_template/tests
+	python -m pytest -v python_template_jupyter/tests
 
 # alias
 tests-py: test-py
 
 coverage-py:  ## run python tests and collect test coverage
-	python -m pytest -v jupyter_template/tests --cov=jupyter_template --cov-report term-missing --cov-report xml
+	python -m pytest -v python_template_jupyter/tests --cov=python_template_jupyter --cov-report term-missing --cov-report xml
 
 .PHONY: test-js tests-js coverage-js
 test-js:  ## run js tests
