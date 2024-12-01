@@ -78,6 +78,7 @@ ignore = [
     "setup.py",
     "python_template_jupyter/labextension/**",
     "python_template_jupyter/nbextension/**",
+    "docs/**/*",
 ]
 
 [tool.coverage.run]
@@ -104,32 +105,14 @@ artifacts = [
 src = "/"
 
 [tool.hatch.build.targets.sdist]
-include = [
-    "/python_template_jupyter",
-    "/js",
-    "LICENSE",
-    "README.md",
-]
+packages = ["python_template_jupyter", "js"]
 exclude = [
-    ".copier-answers.yml",
-    "/.github",
-    "/.gitattributes",
-    "/.gitignore",
+    "/js/dist",
     "/js/node_modules",
 ]
 
 [tool.hatch.build.targets.wheel]
-include = [
-    "/python_template_jupyter",
-]
-exclude = [
-    ".copier-answers.yml",
-    "/.github",
-    "/.gitattributes",
-    "/.gitignore",
-    "/js/node_modules",
-    "/pyproject.toml",
-]
+packages = ["python_template_jupyter"]
 
 [tool.hatch.build.targets.wheel.shared-data]
 "python_template_jupyter/labextension" = "share/jupyter/labextensions/python_template_jupyter"
