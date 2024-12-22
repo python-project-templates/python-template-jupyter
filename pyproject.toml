@@ -18,6 +18,7 @@ keywords = []
 
 classifiers = [
     "Development Status :: 3 - Alpha",
+    "Programming Language :: Python",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
     "Programming Language :: Python :: 3",
@@ -28,10 +29,6 @@ classifiers = [
 ]
 
 dependencies = []
-
-[project.urls]
-Repository = "https://github.com/python-project-templates/python-template-jupyter"
-Homepage = "https://github.com/python-project-templates/python-template-jupyter"
 
 [project.optional-dependencies]
 develop = [
@@ -49,6 +46,10 @@ develop = [
 ]
 
 [project.scripts]
+
+[project.urls]
+Repository = "https://github.com/python-project-templates/python-template-jupyter"
+Homepage = "https://github.com/python-project-templates/python-template-jupyter"
 
 [tool.bumpversion]
 current_version = "0.1.0"
