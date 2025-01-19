@@ -76,7 +76,6 @@ ignore = [
     ".copier-answers.yml",
     "js/pnpm-lock.yaml",
     "Makefile",
-    "setup.py",
     "python_template_jupyter/labextension/**",
     "python_template_jupyter/nbextension/**",
     "docs/**/*",
