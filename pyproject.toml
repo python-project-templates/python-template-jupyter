@@ -118,6 +118,7 @@ exclude = [
 
 [tool.hatch.build.targets.wheel]
 packages = ["python_template_jupyter"]
+exclude = ["js"]
 
 [tool.hatch.build.targets.wheel.shared-data]
 "python_template_jupyter/labextension" = "share/jupyter/labextensions/python_template_jupyter"
