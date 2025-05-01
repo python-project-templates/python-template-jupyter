@@ -45,7 +45,7 @@
     "@jupyterlab/application": "^4.1.5",
     "@jupyterlab/apputils": "^4.2.5",
     "@jupyterlab/notebook": "^4.1.5",
-    "@jupyterlab/services": "^7.1.5",
+    "@jupyterlab/services": "^7.4.1",
     "@lumino/disposable": "^2.1.2"
   },
   "devDependencies": {
