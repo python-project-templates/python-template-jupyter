@@ -52,7 +52,7 @@
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.3",
     "@babel/eslint-parser": "^7.24.1",
-    "@babel/preset-env": "^7.24.3",
+    "@babel/preset-env": "^7.27.1",
     "@jupyterlab/builder": "^4.1.5",
     "babel-jest": "^29.7.0",
     "cpy-cli": "^5.0.0",
