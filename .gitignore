@@ -139,7 +139,6 @@ js/coverage
 js/dist
 js/lib
 js/node_modules
-python_template_jupyter/extension
 
 # Jupyter
 .ipynb_checkpoints
