@@ -39,7 +39,10 @@ develop = [
     "bump-my-version",
     "check-manifest",
     "hatch-jupyter-builder",
+    "codespell>=2.4,<2.5",
     "hatchling",
+    "mdformat>=0.7.22,<0.8",
+    "mdformat-tables>=1",
     "jupyterlab>=4,<5",
     "pytest",
     "pytest-cov",
@@ -58,6 +61,7 @@ Homepage = "https://github.com/python-project-templates/python-template-jupyter"
 current_version = "0.1.0"
 commit = true
 tag = true
+commit_args = "-s"
 
 [[tool.bumpversion.files]]
 filename = "python_template_jupyter/__init__.py"
@@ -79,6 +83,7 @@ ignore = [
     ".copier-answers.yaml",
     "js/pnpm-lock.yaml",
     "Makefile",
+    ".vscode/*",
     "python_template_jupyter/labextension/**",
     "python_template_jupyter/nbextension/**",
     "docs/**/*",
