@@ -1,0 +1,46 @@
+python_template_jupyter
+=======================
+
+.. py:module:: python_template_jupyter
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   python_template_jupyter.__version__
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   python_template_jupyter._jupyter_server_extension_paths
+   python_template_jupyter._jupyter_server_extension_points
+   python_template_jupyter._load_jupyter_server_extension
+   python_template_jupyter._jupyter_nbextension_paths
+
+
+Package Contents
+----------------
+
+.. py:data:: __version__
+   :value: '0.1.0'
+
+
+.. py:function:: _jupyter_server_extension_paths()
+
+.. py:function:: _jupyter_server_extension_points()
+
+.. py:function:: _load_jupyter_server_extension(nb_server_app, nb6_entrypoint=False)
+
+   Called when the extension is loaded.
+
+   :param nb_server_app: handle to the Notebook webserver instance.
+   :type nb_server_app: NotebookWebApplication
+
+
+.. py:function:: _jupyter_nbextension_paths()
+
