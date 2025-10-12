@@ -42,17 +42,10 @@
     "test": "jest --coverage --collectCoverageFrom=src/*.{js}"
   },
   "dependencies": {
-<<<<<<< before updating
-    "@jupyterlab/application": "^4.4.4",
-    "@jupyterlab/apputils": "^4.5.7",
-    "@jupyterlab/notebook": "^4.4.9",
-    "@jupyterlab/services": "^7.4.4",
-=======
     "@jupyterlab/application": "^4.4.9",
     "@jupyterlab/apputils": "^4.5.9",
     "@jupyterlab/notebook": "^4.4.9",
     "@jupyterlab/services": "^7.4.9",
->>>>>>> after updating
     "@lumino/disposable": "^2.1.4"
   },
   "devDependencies": {
@@ -61,11 +54,7 @@
     "@babel/eslint-parser": "^7.28.4",
     "@babel/preset-env": "^7.28.3",
     "@jupyterlab/builder": "^4.4.9",
-<<<<<<< before updating
-    "babel-jest": "^30.1.2",
-=======
     "babel-jest": "^30.2.0",
->>>>>>> after updating
     "cpy-cli": "^6.0.0",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
@@ -76,11 +65,7 @@
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-prettier": "^5.5.4",
     "isomorphic-fetch": "^3.0.0",
-<<<<<<< before updating
-    "jest": "^30.0.0",
-=======
     "jest": "^30.2.0",
->>>>>>> after updating
     "jest-environment-jsdom": "^30.2.0",
     "jest-junit": "^16.0.0",
     "jest-transform-css": "^6.0.3",
