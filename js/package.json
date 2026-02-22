@@ -50,7 +50,7 @@
     "@lumino/disposable": "^2.1.5"
   },
   "devDependencies": {
-    "@babel/cli": "^7.28.3",
+    "@babel/cli": "^7.28.6",
     "@babel/core": "^7.28.5",
     "@babel/eslint-parser": "^7.28.5",
     "@babel/preset-env": "^7.28.5",
