@@ -50,13 +50,8 @@
     "@lumino/disposable": "^2.1.5"
   },
   "devDependencies": {
-<<<<<<< before updating
     "@babel/cli": "^7.28.6",
     "@babel/core": "^7.29.0",
-=======
-    "@babel/cli": "^7.28.3",
-    "@babel/core": "^7.28.5",
->>>>>>> after updating
     "@babel/eslint-parser": "^7.28.6",
     "@babel/preset-env": "^7.29.2",
     "@jupyterlab/builder": "^4.5.6",
