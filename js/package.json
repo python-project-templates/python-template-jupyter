@@ -43,10 +43,14 @@
     "test": "jest --coverage --collectCoverageFrom=src/*.{js}"
   },
   "dependencies": {
-    "@jupyterlab/application": "^4.5.1",
+    "@jupyterlab/application": "^4.5.3",
     "@jupyterlab/apputils": "^4.6.6",
     "@jupyterlab/notebook": "^4.5.1",
+<<<<<<< before updating
     "@jupyterlab/services": "^7.5.5",
+=======
+    "@jupyterlab/services": "^7.5.3",
+>>>>>>> after updating
     "@lumino/disposable": "^2.1.5"
   },
   "devDependencies": {
