@@ -45,8 +45,8 @@
   "dependencies": {
     "@jupyterlab/application": "^4.5.7",
     "@jupyterlab/apputils": "^4.6.7",
-    "@jupyterlab/notebook": "^4.5.1",
-    "@jupyterlab/services": "^7.5.5",
+    "@jupyterlab/notebook": "^4.5.7",
+    "@jupyterlab/services": "^7.5.7",
     "@lumino/disposable": "^2.1.5"
   },
   "devDependencies": {
@@ -76,7 +76,7 @@
   },
   "pnpm": {
     "overrides": {
-      "webpack": "5.105.4"
+      "webpack": "5.76.1"
     }
   }
 }
