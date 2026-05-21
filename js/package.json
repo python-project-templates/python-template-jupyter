@@ -45,26 +45,16 @@
   "dependencies": {
     "@jupyterlab/application": "^4.5.7",
     "@jupyterlab/apputils": "^4.6.7",
-<<<<<<< before updating
-    "@jupyterlab/notebook": "^4.5.1",
-    "@jupyterlab/services": "^7.5.5",
-=======
     "@jupyterlab/notebook": "^4.5.7",
     "@jupyterlab/services": "^7.5.7",
->>>>>>> after updating
     "@lumino/disposable": "^2.1.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.28.6",
     "@babel/core": "^7.29.0",
     "@babel/eslint-parser": "^7.28.6",
-<<<<<<< before updating
     "@babel/preset-env": "^7.29.3",
     "@jupyterlab/builder": "^4.5.7",
-=======
-    "@babel/preset-env": "^7.29.2",
-    "@jupyterlab/builder": "^4.5.6",
->>>>>>> after updating
     "babel-jest": "^30.4.1",
     "cpy-cli": "^6.0.0",
     "eslint": "^8.57.1",
