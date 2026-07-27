@@ -1,4 +1,4 @@
-from python_template_jupyter import *  # noqa
+from python_template_jupyter import *
 
 
 def test_all():
